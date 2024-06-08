@@ -1,5 +1,6 @@
 import heapq
 import tkinter as tk
+from tkinter import simpledialog
 from PIL import Image, ImageTk
 
 # Inisiasi class Graph untuk membuat algoritma djikstra
@@ -108,14 +109,18 @@ edges = {
 
 graph = Graph(edges)
 
-# Mencari jarak terpendek dari satu Node ke Node Lain
-shortest_path = graph.shortest_path('Waypoint', 'Chest 11')
-
 # menggambar titik lokasi pada canvas gambar
 for node, coords in nodes.items():
     x, y = coords
     node_circle = canvas.create_oval(x-5, y-5, x+5, y+5, fill='blue')
     node_text = canvas.create_text(x, y-30, text=node, fill='yellow')
+
+# Mendapatkan input tujuan awal dan akhir dari pengguna
+start_node = simpledialog.askstring("Input", "Masukkan titik awal:").capitalize()
+end_node = simpledialog.askstring("Input", "Masukkan titik akhir:").capitalize()
+
+# Mencari jarak terpendek dari satu Node ke Node Lain
+shortest_path = graph.shortest_path(start_node, end_node)
 
 # Jika terdapat path, maka akan menggambar edge
 if len(shortest_path)-1 >= 1:
